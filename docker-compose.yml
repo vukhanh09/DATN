@@ -11,6 +11,10 @@ volumes:
   shared-workspace:
     name: "hadoop-distributed-file-system"
     driver: local
+  data01:
+  data02:
+  data03:
+
 services:
   jupyterlab:
     image: andreper/jupyterlab:3.0.0-spark-3.0.0
@@ -131,54 +135,51 @@ services:
     depends_on:
       - spark-master
     
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.4.0
-    container_name: elasticsearch
+  es01:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.13.3
+    container_name: es01
     environment:
-      - cluster.name=docker-cluster
+      - node.name=es01
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es02
+      - cluster.initial_master_nodes=es01,es02
       - bootstrap.memory_lock=true
-      - http.cors.enabled=true
-      - http.cors.allow-origin=*
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-    build:
-      context: .
-      dockerfile: Dockerfile.elasticsearch
     ulimits:
       memlock:
         soft: -1
         hard: -1
     volumes:
-      - './elasticsearch/esdata1:/usr/share/elasticsearch/data'
+      - data01:/usr/share/elasticsearch/data
     ports:
       - 9200:9200
 
-  elasticsearch2:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.4.0
-    container_name: elasticsearch2
-    build:
-      context: .
-      dockerfile: Dockerfile.elasticsearch
+
+  es02:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.13.3
+    container_name: es02
     environment:
-      - cluster.name=docker-cluster
+      - node.name=es02
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es01
+      - cluster.initial_master_nodes=es01,es02
       - bootstrap.memory_lock=true
-      - http.cors.enabled=true
-      - http.cors.allow-origin=*
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - "discovery.zen.ping.unicast.hosts=elasticsearch"
     ulimits:
       memlock:
         soft: -1
         hard: -1
     volumes:
-      - './elasticsearch/esdata2:/usr/share/elasticsearch/data'
+      - data02:/usr/share/elasticsearch/data
 
-  kibana:
-    image: docker.elastic.co/kibana/kibana:7.4.0
-    container_name: kibana
-    environment:
-      SERVER_NAME: kibana.local
-      ELASTICSEARCH_URL: http://elasticsearch:9200
+
+  
+
+  kib01:
+    image: docker.elastic.co/kibana/kibana:7.13.3
+    container_name: kib01
     ports:
-      - '5601:5601'
-    depends_on:
-      - elasticsearch     
+      - 5601:5601
+    environment:
+      ELASTICSEARCH_URL: http://es01:9200
+      ELASTICSEARCH_HOSTS: '["http://es01:9200","http://es02:9200"]'
