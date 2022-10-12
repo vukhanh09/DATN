@@ -1,0 +1,5 @@
+- API thông tin sản phẩm
+https://tiki.vn/api/v2/products/194040788?platform=web&spid=196248345
+194040788 : sản phẩm
+spid=196248345 : sản phẩm tương đồng
+bỏ phần sau: sản phẩm do tiki bán
