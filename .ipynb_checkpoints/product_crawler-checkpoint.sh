@@ -1,0 +1,1 @@
+nohup python code/crawl_data/product-producer.py >> logs/product_crawler.txt &

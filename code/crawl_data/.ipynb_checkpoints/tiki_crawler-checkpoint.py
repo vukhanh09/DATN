@@ -53,6 +53,7 @@ class Tiki:
         if response.status_code == 200:
             data = json.loads(response.text)
             return data
+        return 0
         
     def get_max_paging_review(self,url):
         response = requests.get(url, headers=self.headers)
