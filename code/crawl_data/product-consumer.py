@@ -50,7 +50,7 @@ if __name__ == '__main__':
     message = kafkaMessages.selectExpr("CAST(value AS STRING)")
 
     fileStream = message.writeStream \
-                      .trigger(processingTime='60 seconds')\
+                      .trigger(processingTime='300 seconds')\
                       .queryName("Persist the processed data") \
                       .outputMode("append") \
                       .format("parquet") \

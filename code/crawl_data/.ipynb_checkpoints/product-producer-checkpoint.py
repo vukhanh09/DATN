@@ -20,6 +20,7 @@ parser.add_argument('--start_page', type=int, default=1)
 parser.add_argument('--end_page', type=int, default=51)
 parser.add_argument('--start_category', type=int, default=0)
 parser.add_argument('--end_category', type=int, default=24)
+parser.add_argument('--topic', type=str, default='Product')
 args = parser.parse_args()
 
 
@@ -47,9 +48,12 @@ if __name__ == '__main__':
                     time.sleep(0.1)
                     product_url = tiki.api_product.format(pid,spid)
                     item = tiki.get_information_product(product_url)
+                    data = {}
+                    data['id'] = item['id']
+                    data['master_id'] = item['master_id']
                     try:
                         if item != 0:
-                            producer.send('Product', value=item)
+                            producer.send(args.topic, value=data)
                     except Exception as e:
                         print(e)
                         continue
