@@ -46,17 +46,29 @@ if __name__ == '__main__':
             if len(list_product_ids) > 0:
                 for pid,spid in list_product_ids:
                     time.sleep(0.1)
-                    product_url = tiki.api_product.format(pid,spid)
-                    item = tiki.get_information_product(product_url)
-                    data = {}
-                    data['id'] = item['id']
-                    data['master_id'] = item['master_id']
-                    try:
-                        if item != 0:
-                            producer.send(args.topic, value=data)
-                    except Exception as e:
-                        print(e)
-                        continue
+                    if args.topic == 'Product':
+                        product_url = tiki.api_product.format(pid,spid)
+                        item = tiki.get_information_product(product_url)
+                        try:
+                            if item != 0:
+                                producer.send(args.topic, value=item)
+                        except Exception as e:
+                            print(e)
+                            continue
+                    elif args.topic == 'Comment':
+                        review_url = tiki.api_review.format(1,spid,pid)
+                        paging = tiki.get_max_paging_review(review_url)
+                        if paging != 0:
+                            try:
+                                for i in range(1,paging+1):
+                                    time.sleep(0.1)
+                                    comments = tiki.get_review(review_url)
+                                    if comments != 0:
+                                        for item in comments:
+                                            producer.send(args.topic, value=item)
+                            except Exception as e:
+                                print(e)
+                                continue
                 
 
                 

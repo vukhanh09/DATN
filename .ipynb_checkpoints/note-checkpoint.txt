@@ -6,5 +6,5 @@ bỏ phần sau: sản phẩm do tiki bán
 
 apt-get install git
 
-python code/crawl_data/product-producer.py
+python code/crawl_data/product-producer.py --topic Comment
 python code/crawl_data/product-consumer.py

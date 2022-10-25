@@ -19,7 +19,7 @@ spark = "org.apache.spark:spark-streaming-kafka-0-8_2.11:2.1.0"
 os.environ["PYSPARK_SUBMIT_ARGS"] = ("--packages {},{} pyspark-shell".format(kafka, spark))
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--type', type=str, default='Product')
+parser.add_argument('--topic', type=str, default='Product')
 
 args = parser.parse_args()
 
@@ -38,7 +38,7 @@ if __name__ == '__main__':
 
     KAFKA_BROKER='kafka-1:9092'
     
-    KAFKA_TOPIC= args.type
+    KAFKA_TOPIC= args.topic
     kafkaMessages = spark \
       .readStream \
       .format("kafka") \
@@ -55,7 +55,7 @@ if __name__ == '__main__':
                       .outputMode("append") \
                       .format("parquet") \
                       .option("path", f"hdfs://namenode:9000/tiki/{KAFKA_TOPIC}") \
-                      .option("checkpointLocation", "hdfs://namenode:9000/tiki/checkpoints") \
+                      .option("checkpointLocation", f"hdfs://namenode:9000/tiki/checkpoints_{KAFKA_TOPIC}") \
                       .start() \
                       .awaitTermination()
 

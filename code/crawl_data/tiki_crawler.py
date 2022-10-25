@@ -66,7 +66,8 @@ class Tiki:
         response = requests.get(url, headers=self.headers)
         if response.status_code == 200:
             data = json.loads(response.text)
-            return data
+            return data['data']
+        return 0
         
     
     
