@@ -48,27 +48,31 @@ if __name__ == '__main__':
                     time.sleep(0.1)
                     if args.topic == 'Product':
                         product_url = tiki.api_product.format(pid,spid)
-                        item = tiki.get_information_product(product_url)
                         try:
+                            item = tiki.get_information_product(product_url)
                             if item != 0:
                                 producer.send(args.topic, value=item)
                         except Exception as e:
                             print(e)
                             continue
                     elif args.topic == 'Comment':
-                        review_url = tiki.api_review.format(1,spid,pid)
-                        paging = tiki.get_max_paging_review(review_url)
-                        if paging != 0:
-                            try:
+                        try:
+                            review_url = tiki.api_review.format(1,spid,pid)
+                            paging = tiki.get_max_paging_review(review_url)
+                            if paging != 0:
                                 for i in range(1,paging+1):
                                     time.sleep(0.1)
-                                    comments = tiki.get_review(review_url)
-                                    if comments != 0:
-                                        for item in comments:
-                                            producer.send(args.topic, value=item)
-                            except Exception as e:
-                                print(e)
-                                continue
+                                    try:
+                                        comments = tiki.get_review(review_url)
+                                        if comments != 0:
+                                            for item in comments:
+                                                producer.send(args.topic, value=item)
+                                    except Exception as e:
+                                        print(e)
+                                        continue
+                        except Exception as e:
+                            print(e)
+                            continue
                 
 
                 

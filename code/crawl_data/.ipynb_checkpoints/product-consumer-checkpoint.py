@@ -30,19 +30,20 @@ if __name__ == '__main__':
     # init spark session
     spark = SparkSession.\
         builder.\
-        appName("Crawl-Product").\
+        appName(f"Crawl-{args.topic}").\
         master("spark://spark-master:7077").\
         config("spark.executor.memory", "512m").\
         getOrCreate()
     
 
-    KAFKA_BROKER='kafka-1:9092'
+    KAFKA_BROKER_1='kafka-1:9092'
+    KAFKA_BROKER_2='kafka-2:9092'
     
     KAFKA_TOPIC= args.topic
     kafkaMessages = spark \
       .readStream \
       .format("kafka") \
-      .option("kafka.bootstrap.servers", KAFKA_BROKER) \
+      .option("kafka.bootstrap.servers", f"{KAFKA_BROKER_1},{KAFKA_BROKER_2}") \
       .option("subscribe", KAFKA_TOPIC) \
       .option("startingOffsets", "earliest") \
       .load()

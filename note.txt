@@ -8,3 +8,8 @@ apt-get install git
 
 python code/crawl_data/product-producer.py --topic Comment
 python code/crawl_data/product-consumer.py
+
+
+python code/crawl_data/product-producer.py --topic Product --start_category 0 --end_category 12
+python code/crawl_data/product-producer.py --topic Product --start_category 12 --end_category 24
+python code/crawl_data/product-consumer.py --topic Product
