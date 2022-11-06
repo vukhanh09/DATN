@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2022-11-06T14:37:34.546Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36 Edg/107.0.1418.35" etag="qg_QRykWyxA1b-zChZLT" version="20.5.2" type="github">
+<mxfile host="app.diagrams.net" modified="2022-11-06T15:20:52.794Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36 Edg/107.0.1418.35" etag="G52_HaKGXAiO3wgpoRem" version="20.5.2" type="github">
   <diagram id="kHY1OseTcj1uOkUIkcS_" name="Page-1">
-    <mxGraphModel dx="4405" dy="1905" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="2523" dy="896" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -87,8 +87,8 @@
             <mxPoint x="1008.0049999999997" y="175.0000000000001" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="0Fw2PE83Rp96BrffDZTG-66" value="&lt;b&gt;Visualizaion&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Helvetica;fontSize=18;" parent="1" vertex="1">
-          <mxGeometry x="983.93" y="1010" width="60" height="30" as="geometry" />
+        <mxCell id="0Fw2PE83Rp96BrffDZTG-66" value="&lt;b&gt;Analytics&amp;nbsp;&amp;amp; Visualizaion&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Helvetica;fontSize=18;" parent="1" vertex="1">
+          <mxGeometry x="836" y="1010" width="359.03" height="52" as="geometry" />
         </mxCell>
         <mxCell id="0Fw2PE83Rp96BrffDZTG-71" value="&lt;b&gt;Analytics engine&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Helvetica;fontSize=18;" parent="1" vertex="1">
           <mxGeometry x="1248" y="449" width="210" height="70" as="geometry" />
