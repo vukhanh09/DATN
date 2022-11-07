@@ -24,6 +24,9 @@ class Tiki:
         
         self.api_review = 'https://tiki.vn/api/v2/reviews?limit=20&include=comments,contribute_info,attribute_vote_summary&sort=score%7Cdesc,id%7Cdesc,stars%7Call&page={}&spid={}&product_id={}'
         
+        
+        self.shop_api = 'https://tiki.vn/api/shopping/v2/widgets/seller?seller_id={}'
+        
         self.get_category()
         
     
@@ -67,6 +70,14 @@ class Tiki:
         if response.status_code == 200:
             data = json.loads(response.text)
             return data['data']
+        return 0
+
+    
+    def get_shop_information(self,url):
+        response = requests.get(url, headers=self.headers)
+        if response.status_code == 200:
+            data = json.loads(response.text)
+            return data['data']['seller']
         return 0
         
     
