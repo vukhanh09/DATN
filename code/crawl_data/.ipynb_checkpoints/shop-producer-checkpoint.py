@@ -59,7 +59,7 @@ if __name__ == '__main__':
         shop_id = spark.sql("""select distinct current_seller.id from Product""").collect()
         
         #convert row rdd to list python
-        shop_ids = [int(item.id) for item in shop_id]
+        shop_ids = [int(item.id) for item in shop_id if item.id != None]
         
         spark.stop()
         for id in shop_ids:
