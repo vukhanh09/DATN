@@ -4,4 +4,4 @@ kafka-python
 sklearn
 matplotlib
 seaborn
-gensim
+wordcloud
