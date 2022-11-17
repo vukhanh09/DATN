@@ -14,6 +14,16 @@ volumes:
   data01:
   data02:
   data03:
+  zoo1_data:
+  zoo1_log:
+  zoo2_data:
+  zoo2_log:
+  zoo3_data:
+  zoo3_log:
+  kafka2:
+  kafka1:
+  kafka3:
+
 
 services:
   jupyterlab:
@@ -209,6 +219,9 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
     ports:
       - 22181:2181
+    volumes: 
+      - zoo1_data:/var/lib/zookeeper/data
+      - zoo1_log:/var/lib/zookeeper/log
 
   zookeeper-2:
     image: confluentinc/cp-zookeeper:latest
@@ -219,6 +232,9 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
     ports:
       - 32181:2181
+    volumes: 
+      - zoo2_data:/var/lib/zookeeper/data
+      - zoo2_log:/var/lib/zookeeper/log
   
   zookeeper-3:
     image: confluentinc/cp-zookeeper:latest
@@ -229,6 +245,9 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
     ports:
       - 42181:2181
+    volumes: 
+      - zoo3_data:/var/lib/zookeeper/data
+      - zoo3_log:/var/lib/zookeeper/log
   
   kafka-1:
     image: confluentinc/cp-kafka:latest
@@ -248,6 +267,8 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    volumes: 
+      - kafka1:/var/lib/kafka/data
 
   kafka-2:
     image: confluentinc/cp-kafka:latest
@@ -265,6 +286,8 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    volumes: 
+      - kafka2:/var/lib/kafka/data
 
   kafka-3:
     image: confluentinc/cp-kafka:latest
@@ -282,6 +305,8 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    volumes: 
+      - kafka3:/var/lib/kafka/data
 
   manager:
     image: sheepkiller/kafka-manager
