@@ -11,8 +11,8 @@ warnings.filterwarnings("ignore")
 import argparse
 
 
-from pyspark.sql.functions import col,from_json
-from pyspark.sql.types import StructType,StructField, StringType, IntegerType,MapType,FloatType
+from pyspark.sql.functions import col,from_json,explode
+from pyspark.sql.types import StructType,StructField, StringType, IntegerType,MapType,FloatType,ArrayType
 from kafka import KafkaProducer
 from json import dumps
 
@@ -22,6 +22,12 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--topic', type=str, default='ShopInfo')
 args = parser.parse_args()
 
+def extrct_other_seller(arr,current_id):
+    list_id = []
+    list_id.append(current_id)
+    for item in arr:
+        list_id.append(item['id'])
+    return list_id
 
 
 if __name__ == '__main__':
@@ -50,13 +56,17 @@ if __name__ == '__main__':
         schema = StructType([ 
             # get only current_seller info
             StructField("current_seller",MapType(StringType(),StringType()),True),
+            StructField("other_sellers",ArrayType(MapType(StringType(),StringType())),True),
+
         ])
         
         df = data.withColumn("jsonData",from_json(col("value"),schema)) \
                    .select("jsonData.*")
         df.createOrReplaceTempView('Product')
         
-        shop_id = spark.sql("""select distinct current_seller.id from Product""").collect()
+        spark.udf.register('extrct_other_seller',extrct_other_seller,ArrayType(StringType()))
+        
+        shop_id = spark.sql("""select distinct explode(extrct_other_seller(other_sellers,current_seller.id)) id from Product""").collect()
         
         #convert row rdd to list python
         shop_ids = [int(item.id) for item in shop_id if item.id != None]
