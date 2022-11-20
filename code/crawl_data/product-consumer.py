@@ -2,6 +2,7 @@ import json
 import re
 from tqdm import tqdm
 import pandas as pd
+import time
 import warnings
 warnings.filterwarnings("ignore")
 import argparse
@@ -38,12 +39,13 @@ if __name__ == '__main__':
 
     KAFKA_BROKER_1='kafka-1:9092'
     KAFKA_BROKER_2='kafka-2:9092'
+    KAFKA_BROKER_3='kafka-3:9092'
     
     KAFKA_TOPIC= args.topic
     kafkaMessages = spark \
       .readStream \
       .format("kafka") \
-      .option("kafka.bootstrap.servers", f"{KAFKA_BROKER_1},{KAFKA_BROKER_2}") \
+      .option("kafka.bootstrap.servers", f"{KAFKA_BROKER_1},{KAFKA_BROKER_2},{KAFKA_BROKER_3}") \
       .option("subscribe", KAFKA_TOPIC) \
       .option("startingOffsets", "earliest") \
       .load()
@@ -51,14 +53,23 @@ if __name__ == '__main__':
     message = kafkaMessages.selectExpr("CAST(value AS STRING)")
 
     fileStream = message.writeStream \
-                      .trigger(processingTime='300 seconds')\
+                      .trigger(processingTime='30 seconds')\
                       .queryName("Persist the processed data") \
                       .outputMode("append") \
                       .format("parquet") \
                       .option("path", f"hdfs://namenode:9000/tiki/{KAFKA_TOPIC}") \
                       .option("checkpointLocation", f"hdfs://namenode:9000/tiki/checkpoints_{KAFKA_TOPIC}") \
-                      .start() \
-                      .awaitTermination()
-
+                      .start()
+    while True:
+        time.sleep(5)
+        if fileStream.lastProgress != None:
+            if fileStream.lastProgress['numInputRows'] == 0:
+                print('No data inseart in Kafka -> Stop spark...')
+                fileStream.stop()
+                spark.stop()
+                break
+            else:
+                print('Last procesing item:', fileStream.lastProgress['numInputRows'])
+                time.sleep(10)
                 
                 

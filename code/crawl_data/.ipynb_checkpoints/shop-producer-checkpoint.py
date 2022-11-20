@@ -35,7 +35,7 @@ if __name__ == '__main__':
     tiki = Tiki()
     
     # init kafka producer
-    producer = KafkaProducer(bootstrap_servers=['kafka-1:9092'],
+    producer = KafkaProducer(bootstrap_servers=['kafka-1:9092','kafka-2:9092','kafka-3:9092'],
                          value_serializer=lambda x: 
                          dumps(x).encode('utf-8'))
     try:
