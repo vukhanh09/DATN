@@ -23,7 +23,7 @@ spark = SparkSession.\
         getOrCreate()
 
 
-list_item = ['Comment','Product','ShopInfo']
+list_item = ['Comment','Product','ShopInfo','DataAll']
 hdfs_url = 'hdfs://namenode:9000/TikiCleaned/{}'
 
 for item in list_item:
