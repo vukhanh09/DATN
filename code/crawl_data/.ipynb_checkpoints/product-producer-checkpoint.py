@@ -37,19 +37,41 @@ if __name__ == '__main__':
     for i in range(args.start_category, args.end_category, 1):
         category, category_id = tiki.cat_info[i]
         print(f'crawl category: {category}')
+        dict_check = {}
         for page_index in tqdm(range(args.start_page, args.end_page)):
             time.sleep(0.5)
             category_page_url = tiki.api_get_id_product.format(category_id, page_index, category)
 
             list_product_ids = tiki.get_list_id_product(category_page_url)
+            
+            print("Number of product id:", len(list_product_ids))
 
             if len(list_product_ids) > 0:
-                for pid,spid in list_product_ids:
+                for pid,spid in tqdm(list_product_ids):
+                    key_valid = f'{pid}_{spid}'
+                    
+                    if key_valid not in dict_check:
+                        dict_check[key_valid] = 1
+                        
                     time.sleep(0.1)
                     if args.topic == 'Product':
                         product_url = tiki.api_product.format(pid,spid)
                         try:
                             item = tiki.get_information_product(product_url)
+                            other_seller_list = item['other_sellers']
+                            
+                            
+                            # get other seller
+                            if len(other_seller_list) > 0:
+                                for other_seller in other_seller_list:
+                                    spid_new = int(other_seller['product_id'])
+                                    
+                                    key_valid_new = f'{pid}_{spid_new}'
+                                    
+                                    if key_valid_new not in dict_check:
+                                        dict_check[key_valid_new] = 1
+                                        list_product_ids.append([pid,spid_new])
+
                             if item != 0:
                                 producer.send(args.topic, value=item)
                         except Exception as e:

@@ -23,7 +23,11 @@ spark = SparkSession.\
         getOrCreate()
 
 
-list_item = ['Comment','Product','ShopInfo','DataAll']
+list_item = ['Comment','Product','ShopInfo','Product_Shop','metaData','comment_1gram','comment_2gram','comment_3gram']
+
+# list_item = ['comment_1gram','comment_2gram','comment_3gram']
+
+
 hdfs_url = 'hdfs://namenode:9000/TikiCleaned/{}'
 
 for item in list_item:
@@ -42,3 +46,5 @@ for item in list_item:
         ).save()
 
     print(f'Inserted {item} data into Elasticsearch...')
+
+spark.stop()
