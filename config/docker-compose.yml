@@ -110,20 +110,20 @@ services:
       - datanode1
       - datanode2
   
-  historyserver:
-    image: bde2020/hadoop-historyserver:2.0.0-hadoop3.2.1-java8
-    container_name: historyserver
-    restart: always
-    environment:
-      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 datanode2:9864  resourcemanager:8088"
-    volumes:
-      - hadoop_historyserver:/hadoop/yarn/timeline
-    env_file:
-      - ./hadoop.env
-    depends_on:
-      - namenode
-      - datanode1
-      - datanode2
+  # historyserver:
+  #   image: bde2020/hadoop-historyserver:2.0.0-hadoop3.2.1-java8
+  #   container_name: historyserver
+  #   restart: always
+  #   environment:
+  #     SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 datanode2:9864  resourcemanager:8088"
+  #   volumes:
+  #     - hadoop_historyserver:/hadoop/yarn/timeline
+  #   env_file:
+  #     - ./hadoop.env
+  #   depends_on:
+  #     - namenode
+  #     - datanode1
+  #     - datanode2
     
   spark-master:
     image: andreper/spark-master:3.0.0
@@ -334,11 +334,3 @@ services:
       - zookeeper-2
       - zookeeper-3
 
-  
-  nifi:
-    image: apache/nifi:latest
-    container_name: nifi_test
-
-    ports:
-      - 8443:8443
-   
