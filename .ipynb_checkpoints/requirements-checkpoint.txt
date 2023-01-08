@@ -9,3 +9,4 @@ sklearn
 scikit-learn
 numpy
 pyspark
+sparkmeasure
