@@ -53,13 +53,14 @@ if __name__ == '__main__':
     message = kafkaMessages.selectExpr("CAST(value AS STRING)")
 
     fileStream = message.writeStream \
-                      .trigger(processingTime='30 seconds')\
-                      .queryName("Persist the processed data") \
-                      .outputMode("append") \
-                      .format("parquet") \
-                      .option("path", f"hdfs://namenode:9000/tiki/{KAFKA_TOPIC}") \
-                      .option("checkpointLocation", f"hdfs://namenode:9000/tiki/checkpoints_{KAFKA_TOPIC}") \
-                      .start()
+                        .trigger(processingTime='300 seconds')\
+                        .queryName("Persist the processed data") \
+                        .outputMode("append") \
+                        .format("parquet") \
+                        .option("path", f"hdfs://namenode:9000/tiki/{KAFKA_TOPIC}") \
+                        .option("failOnDataLoss","false") \
+                        .option("checkpointLocation", f"hdfs://namenode:9000/tiki/checkpoints_{KAFKA_TOPIC}") \
+                        .start()
     while True:
         time.sleep(5)
         if fileStream.lastProgress != None:
@@ -70,6 +71,6 @@ if __name__ == '__main__':
                 break
             else:
                 print('Last procesing item:', fileStream.lastProgress['numInputRows'])
-                time.sleep(10)
+                time.sleep(60)
                 
                 

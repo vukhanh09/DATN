@@ -85,6 +85,7 @@ if __name__ == '__main__':
                                 for i in range(1,paging+1):
                                     time.sleep(0.1)
                                     try:
+                                        review_url = tiki.api_review.format(i,spid,pid)
                                         comments = tiki.get_review(review_url)
                                         if comments != 0:
                                             for item in comments:
