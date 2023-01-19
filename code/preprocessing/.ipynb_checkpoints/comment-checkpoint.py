@@ -70,5 +70,5 @@ df_clean = spark.sql("""
     from Comment c
 """)
 
-df_clean.write.mode('append').parquet('hdfs://namenode:9000/TikiCleaned/Comment')
+df_clean.write.mode('overwrite').parquet('hdfs://namenode:9000/TikiCleaned/Comment')
 spark.stop()

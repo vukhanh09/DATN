@@ -35,7 +35,7 @@ df_product_shop = spark.sql("""
     join shop s on p.seller_id = s.id
 """)
 
-df_product_shop.write.partitionBy("category_id").mode('append').parquet('hdfs://namenode:9000/TikiCleaned/Product_Shop')
+df_product_shop.repartition(10).write.partitionBy("category_id").mode('overwrite').parquet('hdfs://namenode:9000/TikiCleaned/Product_Shop')
 
 df_all = spark.sql("""
     select p.id p_id, p.master_id,p.price,p.list_price,p.original_price,p.discount,p.discount_rate,
@@ -52,6 +52,6 @@ df_all = spark.sql("""
     join comment c on c.product_id = p.id and p.seller_id = c.seller_id
 """)
 
-df_all.write.partitionBy("category_id").mode('append').parquet('hdfs://namenode:9000/TikiCleaned/metaData')
+df_all.repartition(10).write.partitionBy("category_id").mode('overwrite').parquet('hdfs://namenode:9000/TikiCleaned/metaData')
 
 spark.stop()

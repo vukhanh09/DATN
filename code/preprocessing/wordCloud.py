@@ -36,7 +36,7 @@ for i in range(1,4):
     print('Split n gram:',i)
     result_nGram = getNGram(i)
     
-    result_nGram.write.mode('append').parquet(f'hdfs://namenode:9000/TikiCleaned/comment_{i}gram')               
+    result_nGram.repartition(10).write.mode('overwrite').parquet(f'hdfs://namenode:9000/TikiCleaned/comment_{i}gram')               
 spark.stop()
 
 print(f'Inserted data into HDFS...')
