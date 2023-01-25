@@ -13,7 +13,7 @@ spark = SparkSession.\
         builder.\
         appName("hdfsToElasticsearch").\
         master("spark://spark-master:7077").\
-        config("spark.executor.memory", "1024m").\
+        config("spark.executor.memory", "2048m").\
         getOrCreate()
 
 
@@ -32,11 +32,11 @@ def getNGram(n):
         .count()
     return result_nGram
 
-for i in range(1,4):
+for i in range(1,3):
     print('Split n gram:',i)
     result_nGram = getNGram(i)
     
-    result_nGram.repartition(10).write.mode('overwrite').parquet(f'hdfs://namenode:9000/TikiCleaned/comment_{i}gram')               
+    result_nGram.repartition(2).write.mode('overwrite').parquet(f'hdfs://namenode:9000/analysis/comment_{i}gram')               
 spark.stop()
 
 print(f'Inserted data into HDFS...')

@@ -23,12 +23,11 @@ spark = SparkSession.\
         getOrCreate()
 
 
-list_item = ['Comment','Product','ShopInfo','Product_Shop','metaData','comment_1gram','comment_2gram','comment_3gram']
-
-# list_item = ['comment_1gram','comment_2gram','comment_3gram']
+list_item = ['Product_Shop','metaData','comment_1gram','comment_2gram']
 
 
-hdfs_url = 'hdfs://namenode:9000/TikiCleaned/{}'
+
+hdfs_url = 'hdfs://namenode:9000/analysis/{}'
 
 for item in list_item:
     print(f'Start reading {item}...')

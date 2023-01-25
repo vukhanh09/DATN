@@ -34,5 +34,5 @@ df = data.withColumn("jsonData",from_json(col("value"),schema)) \
                    .select("jsonData.*")
 
 df.createOrReplaceTempView('shopinfo')
-df.write.mode('overwrite').parquet('hdfs://namenode:9000/TikiCleaned/ShopInfo')
+df.repartition(10).write.mode('overwrite').parquet('hdfs://namenode:9000/TikiCleaned/ShopInfo')
 spark.stop()

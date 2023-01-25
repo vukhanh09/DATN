@@ -10,27 +10,29 @@ python code/crawl_data/product-producer.py --topic Comment
 python code/crawl_data/product-consumer.py
 
 
-python code/crawl_data/product-producer.py --topic Product --start_category 0 --end_category 6
-python code/crawl_data/product-producer.py --topic Product --start_category 6 --end_category 12
-python code/crawl_data/product-producer.py --topic Product --start_category 12 --end_category 18
-python code/crawl_data/product-producer.py --topic Product --start_category 18 --end_category 24
+python code/crawl_data/product-producer.py --topic Product --start_category 0 --end_category 5
+python code/crawl_data/product-producer.py --topic Product --start_category 5 --end_category 10
+python code/crawl_data/product-producer.py --topic Product --start_category 10 --end_category 15
+python code/crawl_data/product-producer.py --topic Product --start_category 15 --end_category 20
+python code/crawl_data/product-producer.py --topic Product --start_category 20 --end_category 24
 python code/crawl_data/product-consumer.py --topic Product
 
 
-python code/crawl_data/product-producer.py --topic Comment --start_category 0 --end_category 5
-python code/crawl_data/product-producer.py --topic Comment --start_category 5 --end_category 10
-python code/crawl_data/product-producer.py --topic Comment --start_category 10 --end_category 15
-python code/crawl_data/product-producer.py --topic Comment --start_category 15 --end_category 20
-python code/crawl_data/product-producer.py --topic Comment --start_category 20 --end_category 24
+python code/crawl_data/product-producer.py --topic Comment --start_category 0 --end_category 3
+python code/crawl_data/product-producer.py --topic Comment --start_category 3 --end_category 6
+python code/crawl_data/product-producer.py --topic Comment --start_category 6 --end_category 9
+python code/crawl_data/product-producer.py --topic Comment --start_category 9 --end_category 12
+python code/crawl_data/product-producer.py --topic Comment --start_category 12 --end_category 15
+python code/crawl_data/product-producer.py --topic Comment --start_category 15 --end_category 18
+python code/crawl_data/product-producer.py --topic Comment --start_category 18 --end_category 21
+python code/crawl_data/product-producer.py --topic Comment --start_category 21 --end_category 24
 python code/crawl_data/product-consumer.py --topic Comment
 
 
-python code/crawl_data/product-producer.py --topic Comment --start_category 9 --end_category 10 --start_page 23 --end_page 30
-python code/crawl_data/product-producer.py --topic Comment --start_category 9 --end_category 10 --start_page 30 --end_page 35
-python code/crawl_data/product-producer.py --topic Comment --start_category 9 --end_category 10 --start_page 35 --end_page 40
-python code/crawl_data/product-producer.py --topic Comment --start_category 9 --end_category 10 --start_page 40 --end_page 45
-python code/crawl_data/product-producer.py --topic Comment --start_category 9 --end_category 10 --start_page 45 --end_page 51
-python code/crawl_data/product-producer.py --topic Comment --start_category 7 --end_category 8 --start_page 35 --end_page 51
+python code/crawl_data/product-producer.py --topic Comment --start_category 21 --end_category 22 --start_page 2 --end_page 15
+python code/crawl_data/product-producer.py --topic Comment --start_category 21 --end_category 22 --start_page 15 --end_page 30
+python code/crawl_data/product-producer.py --topic Comment --start_category 21 --end_category 22 --start_page 30 --end_page 35
+python code/crawl_data/product-producer.py --topic Comment --start_category 21 --end_category 22 --start_page 35
 
 
 python code/crawl_data/shop-producer.py

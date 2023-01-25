@@ -82,7 +82,7 @@ def cleanText(str_raw):
 spark.udf.register("cleanText", cleanText,StringType())
 
 product_clean = spark.sql("""
-        select id,master_id,sku,price,list_price,original_price,discount,discount_rate,
+        select distinct id,master_id,sku,price,list_price,original_price,discount,discount_rate,
         rating_average,review_count,productset_group_name,all_time_quantity_sold,
         name, short_description,
         cleanText(name) clean_name,cleanText(description) clean_description,parserAtt(specifications) clean_specifications,
@@ -92,5 +92,5 @@ product_clean = spark.sql("""
         from Product
 """)
 
-product_clean.write.partitionBy("category_id").mode('overwrite').parquet('hdfs://namenode:9000/TikiCleaned/Product')
+product_clean.repartition(10).write.partitionBy("category_id").mode('overwrite').parquet('hdfs://namenode:9000/TikiCleaned/Product')
 spark.stop()

@@ -47,13 +47,13 @@ if __name__ == '__main__':
             print("Number of product id:", len(list_product_ids))
 
             if len(list_product_ids) > 0:
-                for pid,spid in tqdm(list_product_ids):
+                for pid,spid in list_product_ids:
                     key_valid = f'{pid}_{spid}'
                     
                     if key_valid not in dict_check:
                         dict_check[key_valid] = 1
                         
-                    time.sleep(0.1)
+                    time.sleep(0.5)
                     if args.topic == 'Product':
                         product_url = tiki.api_product.format(pid,spid)
                         try:

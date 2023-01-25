@@ -9,10 +9,11 @@ spark = SparkSession.\
         builder.\
         appName("process-data").\
         master("spark://spark-master:7077").\
-        config("spark.executor.memory", "1024m").\
+        config("spark.executor.memory", "2048m").\
         getOrCreate()
 
 data = spark.read.parquet('hdfs://namenode:9000/tiki/Comment')
+data = data.distinct()
 
 schema = StructType([ 
     StructField("id",IntegerType(),True), 
@@ -70,5 +71,5 @@ df_clean = spark.sql("""
     from Comment c
 """)
 
-df_clean.write.mode('overwrite').parquet('hdfs://namenode:9000/TikiCleaned/Comment')
+df_clean.repartition(10).write.mode('overwrite').parquet('hdfs://namenode:9000/TikiCleaned/Comment')
 spark.stop()
