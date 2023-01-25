@@ -92,5 +92,5 @@ product_clean = spark.sql("""
         from Product
 """)
 
-product_clean.repartition(10).write.partitionBy("category_id").mode('overwrite').parquet('hdfs://namenode:9000/TikiCleaned/Product')
+product_clean.repartition(1).write.partitionBy("category_id").mode('overwrite').parquet('hdfs://namenode:9000/TikiCleaned/Product')
 spark.stop()
