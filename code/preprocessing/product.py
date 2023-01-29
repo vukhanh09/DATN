@@ -82,14 +82,17 @@ def cleanText(str_raw):
 spark.udf.register("cleanText", cleanText,StringType())
 
 product_clean = spark.sql("""
-        select distinct id,master_id,sku,price,list_price,original_price,discount,discount_rate,
-        rating_average,review_count,productset_group_name,all_time_quantity_sold,
-        name, short_description,
-        cleanText(name) clean_name,cleanText(description) clean_description,parserAtt(specifications) clean_specifications,
-        breadcrumbs[0].name category_name,breadcrumbs[0].category_id category_id,
-        current_seller.id seller_id,current_seller.name seller_name,current_seller.store_id seller_store_id,
-        cast(current_seller.product_id as int) spid
-        from Product
+        select * from (
+            select id,master_id,sku,price,list_price,original_price,discount,discount_rate,
+            rating_average,review_count,productset_group_name,all_time_quantity_sold,
+            name, short_description,
+            cleanText(name) clean_name,cleanText(description) clean_description,parserAtt(specifications) clean_specifications,
+            breadcrumbs[0].name category_name,breadcrumbs[0].category_id category_id,
+            current_seller.id seller_id,current_seller.name seller_name,current_seller.store_id seller_store_id,
+            cast(current_seller.product_id as int) spid,
+            row_number() over (partition by id,current_seller.id order by all_time_quantity_sold desc) cnt
+            from Product
+        ) where cnt = 1
 """)
 
 product_clean.repartition(1).write.partitionBy("category_id").mode('overwrite').parquet('hdfs://namenode:9000/TikiCleaned/Product')

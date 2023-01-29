@@ -23,7 +23,7 @@ spark = SparkSession.\
         getOrCreate()
 
 
-list_item = ['Product_Shop','metaData','comment_1gram','comment_2gram']
+list_item = ['Product_Shop','metaData','comment_2gram']
 
 
 

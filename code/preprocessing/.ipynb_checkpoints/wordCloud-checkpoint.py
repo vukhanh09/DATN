@@ -33,10 +33,11 @@ def getNGram(n):
     return result_nGram
 
 for i in range(1,3):
-    print('Split n gram:',i)
-    result_nGram = getNGram(i)
-    
-    result_nGram.repartition(1).write.mode('overwrite').parquet(f'hdfs://namenode:9000/analysis/comment_{i}gram')               
+    if i == 2:
+        print('Split n gram:',i)
+        result_nGram = getNGram(i)
+
+        result_nGram.repartition(1).write.mode('overwrite').parquet(f'hdfs://namenode:9000/analysis/comment_{i}gram')               
 spark.stop()
 
 print(f'Inserted data into HDFS...')
