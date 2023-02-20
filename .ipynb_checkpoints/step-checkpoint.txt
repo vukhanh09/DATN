@@ -1,0 +1,21 @@
+python code/crawl_data/product-producer.py --topic Comment
+python code/crawl_data/product-consumer.py --topic Comment
+
+python code/crawl_data/product-producer.py --topic Product
+python code/crawl_data/product-consumer.py --topic Product
+
+python code/crawl_data/shop-producer.py
+python code/crawl_data/product-consumer.py --topic ShopInfo
+
+# preprocessing data notebook
+
+python code/preprocessing/product.py
+python code/preprocessing/comment.py
+python code/preprocessing/shopInfo.py
+python code/preprocessing/joinData.py
+python code/preprocessing/wordCloud.py
+
+python code/dataToElas/hdfsInsertToElas.py
+
+
+python code/dataToElas/wordCloud.py
