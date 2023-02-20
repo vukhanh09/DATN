@@ -1,7 +1,4 @@
----
-# ----------------------------------------------------------------------------------------
-# -- Docs: https://github.com/cluster-apps-on-docker/spark-standalone-cluster-on-docker --
-# ----------------------------------------------------------------------------------------
+
 version: "3.6"
 volumes:
   hadoop_namenode:
@@ -14,15 +11,7 @@ volumes:
   data01:
   data02:
   data03:
-  # zoo1_data:
-  # zoo1_log:
-  # zoo2_data:
-  # zoo2_log:
-  # zoo3_data:
-  # zoo3_log:
-  # kafka2:
-  # kafka1:
-  # kafka3:
+
 
 
 services:
@@ -110,20 +99,6 @@ services:
       - datanode1
       - datanode2
   
-  # historyserver:
-  #   image: bde2020/hadoop-historyserver:2.0.0-hadoop3.2.1-java8
-  #   container_name: historyserver
-  #   restart: always
-  #   environment:
-  #     SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 datanode2:9864  resourcemanager:8088"
-  #   volumes:
-  #     - hadoop_historyserver:/hadoop/yarn/timeline
-  #   env_file:
-  #     - ./hadoop.env
-  #   depends_on:
-  #     - namenode
-  #     - datanode1
-  #     - datanode2
     
   spark-master:
     image: andreper/spark-master:3.0.0
@@ -232,9 +207,7 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
     ports:
       - 22181:2181
-    # volumes: 
-    #   - zoo1_data:/var/lib/zookeeper/data
-    #   - zoo1_log:/var/lib/zookeeper/log
+
 
   zookeeper-2:
     image: confluentinc/cp-zookeeper:latest
@@ -245,9 +218,7 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
     ports:
       - 32181:2181
-    # volumes: 
-    #   - zoo2_data:/var/lib/zookeeper/data
-    #   - zoo2_log:/var/lib/zookeeper/log
+
   
   zookeeper-3:
     image: confluentinc/cp-zookeeper:latest
@@ -258,9 +229,7 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
     ports:
       - 42181:2181
-    # volumes: 
-    #   - zoo3_data:/var/lib/zookeeper/data
-    #   - zoo3_log:/var/lib/zookeeper/log
+
   
   kafka-1:
     image: confluentinc/cp-kafka:latest
@@ -280,8 +249,7 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
-    # volumes: 
-    #   - kafka1:/var/lib/kafka/data
+
 
   kafka-2:
     image: confluentinc/cp-kafka:latest
@@ -299,8 +267,7 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
-    # volumes: 
-    #   - kafka2:/var/lib/kafka/data
+
 
   kafka-3:
     image: confluentinc/cp-kafka:latest
@@ -318,8 +285,7 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
-    # volumes: 
-    #   - kafka3:/var/lib/kafka/data
+
 
   manager:
     image: sheepkiller/kafka-manager
