@@ -60,44 +60,44 @@ services:
     env_file:
       - ./hadoop.env
   
-  resourcemanager:
-    image: bde2020/hadoop-resourcemanager:2.0.0-hadoop3.2.1-java8
-    container_name: resourcemanager
-    restart: always
-    environment:
-      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 datanode2:9864"
-    env_file:
-      - ./hadoop.env
-    depends_on:
-      - namenode
-      - datanode1
-      - datanode2
+  # resourcemanager:
+  #   image: bde2020/hadoop-resourcemanager:2.0.0-hadoop3.2.1-java8
+  #   container_name: resourcemanager
+  #   restart: always
+  #   environment:
+  #     SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 datanode2:9864"
+  #   env_file:
+  #     - ./hadoop.env
+  #   depends_on:
+  #     - namenode
+  #     - datanode1
+  #     - datanode2
 
-  nodemanager1:
-    image: bde2020/hadoop-nodemanager:2.0.0-hadoop3.2.1-java8
-    container_name: nodemanager1
-    restart: always
-    environment:
-      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 resourcemanager:8088"
-    env_file:
-      - ./hadoop.env
-    depends_on:
-      - namenode
-      - datanode1
-      - datanode2
+  # nodemanager1:
+  #   image: bde2020/hadoop-nodemanager:2.0.0-hadoop3.2.1-java8
+  #   container_name: nodemanager1
+  #   restart: always
+  #   environment:
+  #     SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode1:9864 resourcemanager:8088"
+  #   env_file:
+  #     - ./hadoop.env
+  #   depends_on:
+  #     - namenode
+  #     - datanode1
+  #     - datanode2
   
-  nodemanager2:
-    image: bde2020/hadoop-nodemanager:2.0.0-hadoop3.2.1-java8
-    container_name: nodemanager2
-    restart: always
-    environment:
-      SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode2:9864 resourcemanager:8088"
-    env_file:
-      - ./hadoop.env
-    depends_on:
-      - namenode
-      - datanode1
-      - datanode2
+  # nodemanager2:
+  #   image: bde2020/hadoop-nodemanager:2.0.0-hadoop3.2.1-java8
+  #   container_name: nodemanager2
+  #   restart: always
+  #   environment:
+  #     SERVICE_PRECONDITION: "namenode:9000 namenode:9870 datanode2:9864 resourcemanager:8088"
+  #   env_file:
+  #     - ./hadoop.env
+  #   depends_on:
+  #     - namenode
+  #     - datanode1
+  #     - datanode2
   
     
   spark-master:
