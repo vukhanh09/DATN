@@ -1,3 +1,5 @@
+cd DATN
+
 python code/crawl_data/product-producer.py --topic Comment
 python code/crawl_data/product-consumer.py --topic Comment
 
@@ -19,3 +21,12 @@ python code/dataToElas/hdfsInsertToElas.py
 
 
 python code/dataToElas/wordCloud.py
+
+
+
+-- demo
+python code/crawl_data/product-producer.py --topic Product
+python code/demo/product-consumer.py
+python code/demo/hdfsInsertToElas.py
+
+
