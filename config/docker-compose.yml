@@ -235,10 +235,10 @@ services:
     image: confluentinc/cp-kafka:latest
     container_name: kafka-1
 
-    depends_on:
-      - zookeeper-1
-      - zookeeper-2
-      - zookeeper-3
+    # depends_on:
+    #   - zookeeper-1
+    #   - zookeeper-2
+    #   - zookeeper-3
 
     ports:
       - 29092:29092
@@ -254,10 +254,10 @@ services:
   kafka-2:
     image: confluentinc/cp-kafka:latest
     container_name: kafka-2
-    depends_on:
-      - zookeeper-1
-      - zookeeper-2
-      - zookeeper-3
+    # depends_on:
+    #   - zookeeper-1
+    #   - zookeeper-2
+    #   - zookeeper-3
     ports:
       - 39092:39092
     environment:
@@ -272,10 +272,10 @@ services:
   kafka-3:
     image: confluentinc/cp-kafka:latest
     container_name: kafka-3
-    depends_on:
-      - zookeeper-1
-      - zookeeper-2
-      - zookeeper-3
+    # depends_on:
+    #   - zookeeper-1
+    #   - zookeeper-2
+    #   - zookeeper-3
     ports:
       - 49092:49092
     environment:
